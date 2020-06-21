@@ -1,0 +1,53 @@
+<!-- Exemple de fichier HTML -->
+<!-- Au passage, un commentaire HTML s ecrit entre <!-- et -->
+
+<!doctype html> <!-- balise specifiant qu il s agit d un document HTML -->
+
+<html lang="fr">    <!-- "racine" de l arbre des balise, permet aussi d y specifier certains attributs, comme ici la langue du document, a destination des navigateurs web -->
+	<head>          <!-- En-tete du document, avec de -->
+		<meta charset="utf-8">                      <!-- Encodage des caracteres, ici un bon vieux UTF-8 standard -->
+		<title>Voici mon site</title>               <!-- Titre de la page -->
+        <link rel="stylesheet" href="repertoire_style/style.css">    <!-- indique la feuille de style css a utiliser pour ce document HTML ; on utilise ici un chemin relatif : le fichier se trouve dans le dossier appele dossier_style, qui se trouve lui-meme dans le dossier courant -->
+         <!-- A vous de trouver comment rajouter une image pour la petite icone figurant dans l onglet -->
+	</head>
+	<body>   <!-- On rentre ici dans le corps du document, i.e. dans le contenu de la page a proprement parler -->
+
+		<h1>Hello World! Ceci est censé être un titre</h1>     <!-- Les balise h1, h2, etc sont des balises de titres, du plus gros (important) au plus petit (moins important) -->
+
+		<p>Ceci est un <strong>paragraphe</strong>. Avez-vous bien compris ?</p>    <!-- Alors, c est compris ? -->
+
+        <br/>   <!-- </br> est une balise de type auto-fermante : ces balises n ont pas besoin d etre fermees, car elles n "encadrent" rien (ici, br signifie un retour a la ligne) -->
+
+        <p>On donne un exemple de liste non-ordonnée :
+        <ul>    <!-- Un exemple de liste non ordonnee, c est-a-dire non numerotee (ul signifie "unorderered list") -->
+            <li><a href="page1.html">Un lien par ci</a> <small>(un exemple de liste ordonnée, fichier page1.html)</small></li>         <!-- La balise <a> est extremement importante en HTML : c est par elle que l on specifie des liens -->
+            <li><a href="repertoire_page2/page2.html">Et un lien par la</a> <small>(un exemple de tableau, dans le fichier page2.html dans le repertoire correspondant)</small></li>
+            <li><a href="https://en.wikipedia.org/wiki/The_Treachery_of_Images">Ceci n'est pas un lien</a></li>
+            <li><a href="accueil.html">Ceci est un lien inutile</a></li>
+        </ul>
+        <!-- les balise <li> sont utilisee pour les elements d une liste : li signifie "list item" -->
+        </p>
+
+        </br>
+        <!-- on peut changer le style d un seul paragraphe, ou d une seule balise, en utilisant un id, et en definissant le style correspondant dans le css -->
+        <p id="style_sobre_de_paragraphe">Un exemple de lien interne, en utilisant une ancre :
+        <a name="la_cible"/> <!-- On utilise ici aussi une balise <a>, mais auto-fermante et avec l attribut name qui donne le nom de l ancre -->
+        <ul>
+
+            <li><a href="accueil.html#la_cible">Ceci est un lien renvoyant sur la ligne précedente (ne se voit pas car la page est trop petite)</a></li>
+        </ul>
+        </p>
+
+        <footer>
+        <img src="repertoire_img/by-nc-sa.svg" alt="Licence CC by-nc-sa" height="100pt"></img>
+        <br/>
+        <strong>Licence CC BY-NC-SA</strong>
+        <br/>
+        Attribution de l'auteur : 1ère NSI EIB &Eacute;toile 2019&ndash;2020   <!-- le caractere &ndash designe un caractere special HTML -->
+        <br/>
+        Diffusion autorisée sans modification
+        <br/>
+        Usage non-commercial
+        </footer>
+	</body>
+</html>

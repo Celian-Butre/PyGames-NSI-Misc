@@ -1,0 +1,44 @@
+/* Exemple de fichier css /*
+/* Au passage : un commentaire en css s ecrit entre /* et */
+
+h1  /* style des balises de titre h1 */
+{
+	text-align: center;
+    color: blue
+/*	background-color: red : */
+}
+
+p /* style des paragraphes */
+{
+	font-family: Verdana;
+	font-style: italic;
+	color: green;
+}
+
+.joli  /* style des paragraphes */
+{
+	font-family: Verdana;
+	font-style: bold ;
+	color: red ;
+}
+
+#style_sobre_de_paragraphe
+{
+    font-style: normal ;
+    color: black ;
+}
+
+a { /* style des hyperliens */
+	color: #306090;
+	text-decoration: none;
+}
+
+a:hover { /* .hover signifie "lorsqu on passe la souris dessus" */
+	color: #990000;
+	text-decoration: underline;
+}
+
+footer
+{
+    text-align: center ;
+}

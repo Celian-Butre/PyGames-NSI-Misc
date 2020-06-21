@@ -1,0 +1,88 @@
+h1 /* des alignements et couleur pour des titres dans les pages */
+{
+	text-align: center;
+	background-color: red;
+}
+h2 /* des alignements et couleur pour des titres dans les pages */
+{
+	text-align: center;
+	background-color: green;
+}
+h3 /* des alignements et couleur pour des titres dans les pages */
+{
+	text-align: center;
+	background-color: blue;
+}
+#span_1
+{
+	font-family: Verdana;
+	font-style: italic;
+	color: green;
+    text-align: center;
+}
+#span_2
+{
+	font-family: Verdana;
+	font-style: italic;
+	color: green;
+    text-align: center;
+}
+#span_3
+{
+	font-family: Verdana;
+	font-style: italic;
+	color: green;
+    text-align: center;
+}
+#para_1
+{
+	font-family: Verdana;
+	font-style: italic;
+	color: green;
+    text-align: center;
+}
+#para_2
+{
+	font-family: Verdana;
+	font-style: italic;
+	color: green;
+    text-align: center;
+}
+#para_3
+{
+	font-family: Verdana;
+	font-style: italic;
+	color: green;
+    text-align: center;
+}
+.center
+{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 25%;
+}
+h1{
+	text-align: center;
+}
+#p1pro{
+	text-align : center;
+}
+#button1text{
+	text-align : center;
+}
+#button2text{
+	text-align : center;
+}
+#maDiv{
+	width : 200px;
+	height : 100px;
+	margin : 0 auto;
+	border : 2px solid black;
+}
+.rouge {
+	background-color:red;
+}
+.vert {
+	background-color : green;
+}
