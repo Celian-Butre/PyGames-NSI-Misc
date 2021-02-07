@@ -1,0 +1,209 @@
+import math 
+import random
+
+capital = 1000
+
+joueuràlatable = True
+nombreDeJeux = 0
+
+caseRouge = [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36]
+
+def afficherTirage(billeArretéSur):
+  print(billeArretéSur)
+
+def testPaire(billeArretéSur):
+  if billeArretéSur%2 == 0:
+    return (True)
+  else:
+    return (False)
+    
+def testManque(billeArretéSur):
+  if billeArretéSur > 0 and billeArretéSur < 19:
+    return (True)
+  if billeArretéSur < 37 and billeArretéSur > 18:
+    return (False)
+  if billeArretéSur == 0:
+    return (False)
+  
+def testRouge(billeArretéSur):
+  rouge = False
+  for i in range (18):
+    if billeArretéSur == caseRouge[i]:
+      rouge = True
+      return (True)
+  if rouge == False and billeArretéSur != 0:
+    return (False)
+  if billeArretéSur == 0:
+    return (False)
+  
+def tirerNuméro():
+  billeArretéSur = random.randint(0,36)
+  return (billeArretéSur)
+
+
+def liste_De_Paris():
+  print("Liste des paris :")
+  print("* numéro simple (rapporte 36 fois la mise) : saisir un numéro entre 0 et 36")
+  print("* pair (rapporte 2 fois la mise) : saisir 37")
+  print("* impair (rapporte 2 fois la mise) : saisir 38")
+  print("* manque (numéros de 1 à 18, rapporte 2 fois la mise) : saisir 39")
+  print("* passe (numéros de 19 à 36, rapporte 2 fois la mise) : saisir 40")
+  print("* rouge (rapporte 2 fois la mise) : saisir 41")
+  print("* noir (rapporte 2 fois la mise) : saisir 42")
+
+print ("votre capital est de", capital)
+
+print("bienvenue à la roulette! voici les paris possibles")
+liste_De_Paris()
+
+while joueuràlatable == True and capital > 0:
+  # liste des paris
+  print("* pour un rappel de la liste de paris: saisir 43")
+  print("")
+
+  # paris saisie
+  pariPlacéeSur = int(input("Alors, où placez-vous votre pari?     "))
+
+  # test de validité du pari
+  while pariPlacéeSur > 42 or pariPlacéeSur < 0:
+    if pariPlacéeSur != 43:
+      print("pari non valide")
+      print("* pour un rappel de la liste de paris: saisir 43")
+    if pariPlacéeSur == 43:
+      liste_De_Paris()
+    pariPlacéeSur = int(input("Alors, où placez-vous votre pari?    "))
+
+  # calcule de la mise maximale
+  if capital > 500:
+    miseMaximale  = 500
+  else:
+    miseMaximale = capital
+  
+  # demande de la mise
+  print ("La mise maximale est placée à ", miseMaximale )
+  mise = int(input("Combien voulez-vous miser?    "))
+
+  # verification de la mise
+  while mise > miseMaximale or miseMaximale < 1:
+    if mise > miseMaximale:
+      mise = int(input("désolé mais votre mise est suppérieur à la mise maximale: combien voulez-vous miser?    "))
+    else:
+      mise = int(input("désolé mais vous devez misez: combien voulez-vous miser?    "))
+  # lançage de bille
+  billeArretéSur = tirerNuméro()
+
+  # calcule des propriétés
+  parité = testPaire(billeArretéSur)
+  passeOuManque = testManque(billeArretéSur)
+  couleur = testRouge(billeArretéSur)
+
+  # test de victoire et calcule des gains
+  gagné = False
+  gains = 0
+  # pour pair/impaire
+  if pariPlacéeSur < 37:
+    if pariPlacéeSur == billeArretéSur:
+      gains = (35 * mise)
+    else:
+      gains = (-1 * mise)
+  
+  if pariPlacéeSur == 37 or pariPlacéeSur == 38:
+    if pariPlacéeSur == 37:
+      if parité == True:
+        gains = (1 * mise)
+      else:
+        gains = (-1 * mise)
+    else:
+      if parité == False:
+        gains = (1 * mise)
+      else:
+        gains = (-1 * mise)
+  
+  # pour manque/passe
+  if pariPlacéeSur == 39 or pariPlacéeSur == 40:
+    if pariPlacéeSur == 39:
+      if passeOuManque == True:
+        gains = (1 * mise)
+      else:
+        gains = (-1 * mise)
+    else:
+      if passeOuManque == False and billeArretéSur != 0:
+        gains = (1 * mise)
+      else:
+        gains = (-1 * mise)
+
+  # pour rouge/noir
+  if pariPlacéeSur == 41 or pariPlacéeSur == 42:
+    if pariPlacéeSur == 41:
+      if couleur == True:
+        gains = (1 * mise)
+      else:
+        gains = (-1 * mise)
+    else:
+      if couleur == False and billeArretéSur != 0:
+        gains = (1 * mise)
+      else:
+        gains = (-1 * mise)
+    
+  # conversion en string
+  if parité == True:
+    parité = "pair"
+  else:
+    parité = "impair"
+
+  if passeOuManque == True:
+    passeOuManque = "manque"
+  elif billeArretéSur != 0:
+    passeOuManque = "passe"
+  else:
+    passeOuManque = "ni manque ni passe"
+
+  if couleur == True:
+    couleur = "rouge"
+  elif billeArretéSur != 0:
+    couleur = "noir"
+  else:
+    couleur = "ni rouge ni noir"
+
+  # impression des résultats
+  print("la bille c'est arrété sur ", billeArretéSur, " elle est ", parité, " et est ", passeOuManque, " et est ", couleur)
+
+  # affichage gains
+  if gains > 0:
+    print ("Vous avez donc gagné: ", gains)
+    print ("Votre nouveau capital est de: ", (gains + capital))
+    capital += gains
+  if gains < 0:
+    print ("Vous avez donc perdu: ", (-gains))
+    print ("Votre nouveau capital est de: ", (gains + capital))
+    capital += gains
+  
+  # comptage de nombres de jeux joués
+  nombreDeJeux += 1
+  
+  # test d'être ruiné
+  if capital == 0:
+    joueuràlatable = False
+
+  # offre de quitter
+  if nombreDeJeux % 10 == 0:
+    print("Vous venez de jouer ", nombreDeJeux, " fois!")
+    continué = str(input("Voulez vous continuez: oui ou non?    "))
+    
+    # test de réponse pertinente
+    while continué != "oui"and continué != "non":
+      print("vous n'avez ni répondu oui ni répondu non, vous semblez être sous l'influence d'alcools, vous devriez arreter.")
+      continué = str(input("Voulez vous continuez: oui ou non?    "))
+    
+    # arrêt ou non:
+    if continué == "non":
+      joueuràlatable = False
+
+# affichage de fin de parti
+
+if capital == 0:
+  print("Vous êtes ruiné; merci d'avoir rempli nos banques! cela ne vous à que pris ", nombreDeJeux," paris!")
+elif capital < 1000:
+  print("En tout, vous avez perdu ", (1000 - capital),"; nos banques se remplissent!")
+elif capital > 1000:
+  print("En tout, vous avez gagné ", (capital - 1000 ), "; nous ne sommes pas ruiné mais nos banques ce vident ;(")
