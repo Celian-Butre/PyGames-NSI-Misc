@@ -1,0 +1,29 @@
+\documentclass{article}
+
+
+\usepackage[%
+backend=bibtex,
+citestyle=numeric,
+bibstyle=reading,
+% defernumbers,
+sorting=nyt,
+maxnames=4,
+backref=true,
+% backrefstyle=three,
+]
+{biblatex}
+
+\addbibresource{ma_biblio}
+
+\begin{document}
+
+\nocite{*} % permets de faire apparaitre dans la biblio une ref non citée dans le document (* pour toutes les refs du .bib)
+
+\printbibheading% le titre de la biblio
+
+\printbibliography[heading=subbibliography,title={Livres},type=book] 
+
+\printbibliography[heading=subbibliography,title={Articles},nottype=book]% une section de la biblio
+
+\end{document}
+

@@ -1,0 +1,347 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[a4paper,11pt]{article}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% Gestion de l'encodage et de la typographie
+\usepackage[utf8]{inputenc}    %% encodage des caractères (en entrée, dans la source .tex) : indispensable pour saisir le code source directement avec des accents (sinon, il faut utiliser e.g. \'e pour é, etc)
+\usepackage[T1]{fontenc}       %% gestion de l'encodage (notamment des césure au niveau des caractères accentués)
+\usepackage[francais]{babel}   %% traitement du texte adapté aux règles typographiques de la langue donnée en option (e.g., pour l'espacement après les ponctuations)
+%% Il existe beaucoup de police de caractères à disposition :                               
+% \usepackage{times}
+% \usepackage{ae}
+\usepackage{lmodern}          %% celle-ci est fortement recommandée
+%
+\usepackage{graphicx}                  %% pour inclure des figures 
+\usepackage{amsmath, amsthm, amssymb}  %% pour faire de jolies mathématiques, avec plein de symboles supplémentaires
+\usepackage{url}                       %% pour inclure des urls (hyperref peut egalement servir, si on veut un lien apparent different du "vrai" lien)
+\usepackage{hyperref}                  %% pour les liens (à la fois internes et externes au document)
+\usepackage[french,ruled,vlined]{algorithm2e}% pour présenter de jolis algos (il existe aussi le package algorithmics)
+%
+\usepackage[left=1.5cm,right=1.5cm,top=2cm,bottom=2cm,headsep=1cm]{geometry}% pour bidouiller les marges
+\usepackage{fancyhdr}         %% personnalisation en-têtes et pieds de page
+\usepackage{lastpage}         %% permet de connaître le numéro de la dernière page
+\fancyhf{}
+%% header personnalisé : left-center-right
+\lhead{}\chead{}\rhead{}    %% header personnalisé : left-center-right
+%% footer personnalisé : left-center-right
+\lfoot{}\cfoot{\sc Cryptographie}\rfoot{\thepage}
+\renewcommand{\headrulewidth}{0pt} %% epaisseur trait header
+\renewcommand{\footrulewidth}{1pt} %% epaisseur trait footer
+\pagestyle{fancy}   %% pour utiliser le style fancy que l'on vient de définir
+%
+%% QUELQUES REMARQUES ET COMMANDES : 
+%% en Tex, on utilise les balises de typo en faisant (comme chez les anciens imprimeurs) : {\typo texte ici}, la typo etant appliquee uniquement a ce qui se trouve entre les deux balises
+%% en LaTeX, on peut faire a la place : \texttypo{texte ici}
+%% Par exemple : {\bf texte} et \textbf{texte} auront le meme effet en Latex : mettre texte en gras
+%% Quelques exemple :
+%% \bf : bold font (gras)
+%% \em : emphasis (fait ressortir le texte soit en le mettant en penche si le texte est droit, soit l'inverse)
+%% \it : italic (italique)
+%% \sl : slanted (penche)
+%% \sc : small cap (petites lettres capitales, tres joli)
+%% \tt : typewriting text (type machine a ecrire, utile en info pour ecrire des commandes)
+%% \sf : typo sans empattement
+%% \underline{texte} : souligne le texte
+%% \verb! du texte ! : permet d'afficher tel quel (utile pour les underscores, backslash, etc) tout ce qui est ecrit entre les deux points d'exclamation (on peut remplacer les deux points d'exclamation par tout autre symbole, par exemple \verb? texte ? aura le meme effet)
+%% \og et \fg : guillements ouvrants et fermants
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{
+{\normalsize
+\vspace*{-1.5cm}
+\includegraphics[width=3cm]{eib_logo.jpg}
+% 
+\hfill
+T\textsuperscript{ale}\\
+Lycée EIB \'Etoile 2020--2021
+\hfill
+{\sc Numériques et Sciences Informatiques}
+\hrule%
+\vspace{5mm}%
+}
+{\sc Cryptographie}  %% \sc pour small caps : petites capitales, c'est joli, j'aime bien
+}% fin d utilisation de la commande title
+\author{Leopold {\sc Tran}}
+% \date{} % a remplir et decommenter pour faire apparaitre la date voulue ; decommenter en laissant vide si on ne veut pas de date sur le document
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\maketitle       %% execute les commandes de titre (title / author / date 
+\tableofcontents %% dresse la table des matieres
+\thispagestyle{fancy} %% pour que le style fancy soit applique en 1ere page (par defaut, fancy ne s'applique qu'a partir de la 2eme page)
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Bulletin officiel} %% l'etoile permet de ne pas numeroter (mais l'entrée n'apparait pas dans la table des matieres : il faut la rajouter manuellement : cf ci-dessous)
+\addcontentsline{toc}{section}{Bulletin officiel}    % pour ajouter une ligne à la table des matières (toc pour table of content)
+%% ------------------------------------ %%
+
+\begin{center}
+\begin{tabular}{|p{5cm}|p{5cm}|p{5cm}|}\hline
+{\bf Contenu} & {\bf Capacités attendues} & {\bf Commentaires}\\\hline
+Sécurisation des communications
+&
+Décrire les principes de chiffrement symétrique (clef partagée) et asymétrique (avec clef privée/clef publique).
+Décrire l'échange d'une clef symétrique en utilisant un protocole asymétrique pour sécuriser une communication {\tt HTTPS}.
+&
+Les protocoles symétriques et asymétriques peuvent être illustrés en mode débranché, éventuellement avec description d'un chiffrement particulier.
+La négociation de la méthode chiffrement du protocole {\tt SSL} (Secure Sockets Layer) n'est pas abordée.
+\\\hline
+\end{tabular}
+\end{center}
+  
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection*{Introduction}
+\addcontentsline{toc}{section}{Introduction}    % pour ajouter une ligne à la table des matières (toc pour table of content)
+%% ------------------------------------ %%
+
+Brève introduction sur le contexte général et les motivations : depuis l'Antiquité, besoin de protéger des secrets et des communications, etc.
+
+On peut citer ici les sources utilisées dans tout le document, comme par exemple \cite{pixees}, et \cite{lewebpedagogique} (que l'on peut aussi citer ponctuellement dans le document si on ne s'en sert juste pour une information ou figure). % \cite{cle de l'entree correspondante dans la bibliographie} : attention il faut compiler plusieurs fois latex pour que toutes les refs s'actualisent)
+%% faire un saut de ligne dans le fichier tex source correspond a un retour a la ligne dans le document final
+\\ %% pour un vrai saut de ligne dans le document final, il faut un double backslash
+C'est également ici que l'on peut introduire les acronymes importants utilisés tout le long ou une partie du document :
+
+algo / méthode RSA (du noms des auteurs de l'algorithme : Riverst, Shamir et Adleman).
+\\
+Quelques rappels TeX / LaTeX : figure et algorithme (à terme : figure et algo à supprimer de l'intro)
+\begin{figure}[!h] %% l'option h! permet de forcer l'endroit de la figure (avec les options t et b : les figures sont forcees en haut de page (t comme top) ou bas (b comme bottom)
+\begin{center}
+  \includegraphics[height=2.5cm]{by-nc-sa} %% remplacer by-nc-sa par le nom du fichier image a inclure (extension de preference en png, jpeg, ou pdf si on utilise pdfLaTeX) ; le fichier peut etre dans un sous-repertoire, mais c'est plus simple (s'il y a moins d'une dizaine d'images) de tout laisser dans le meme repertoire
+  %% height, width ou scale permettent de controler la taille de l'image
+  \caption{Titre de la figure : logo de la licence libre CC BY-NC-SA.}
+  \label{fig1}
+\end{center}
+\end{figure}
+
+\begin{center}
+\begin{algorithm}[h!]
+%% on redefinit les intitules des mots-cles d'algo
+\SetKwInOut{Input}{Entr\'ee}
+\SetKwInOut{Output}{Sortie}
+\SetKwIF{If}{ElseIf}{Else}{Si}{Alors}{Sinon Si}{Sinon}{FinSi}
+\SetKwFor{For}{Pour}{Faire}{FinPour}
+\SetKwFor{While}{TantQue}{Faire}{FinTantque}
+\SetKw{Return}{Retourner}
+%
+\Input{entrée de l'algo}
+\Output{sortie de l'algo}
+\BlankLine
+\tcp{un commentaire à la C++}
+une variable $\leftarrow$ une valeur\\ %% exemple d'affectation ; il faut finir les instructions par un saut de ligne : \\
+Rédiger\_rapport(param1 = $n$ élèves)\\ %% exemple d'appel de fonction
+\While{une condition avec un {\bf ou} en gras}{  %% TantQue
+  faire\_un\_truc\\
+  faire\_un\_autre\_truc\\
+}
+\eIf{une condition}%% \eIf  Si-Sinon : \eIf{condition}{bloc du si}{bloc du sinon}
+  {bloc du si}
+  {bloc du sinon}
+\Return{un truc si l'algo a bien taffé}
+\caption{Nom de l'algorithme.}
+\label{algo1}
+\end{algorithm}
+\end{center}
+
+On peut faire référence dans le texte (et il le faut) à la figure ou à l'algorithme avec Fig. \verb!ref{fig1}! ou Algo. \verb!\ref{algo1}! (fig1 et algo1 étant les clés/label associés), ce qui donne : Fig. \ref{fig1} et Algo. \ref{algo1}.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Cryptographie}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Un peu d'histoire}
+%% ------------------------------------ %%
+
+\begin{itemize}
+\item Motivations
+\item Importance de la crypto, indépendemment de la période historique (aussi important à l'antiquité ou au moyen-âge que dans le monde numérique actuel)
+\item Intérêt porté à la crypto par certains mathématiciens importants : antiques (?), arabes du moyen-âge (Ibn al-Durayhim, Al-Kindi), Turing, les polonais du début de la guerre, etc
+\end{itemize}
+
+\begin{figure}[!h]
+\begin{center}
+%   \includegraphics[height=2.5cm]{}
+  \caption{Une photo d'Enigma ?}
+  \label{etiquette_de_la_figure_pour_y_faire_reference_plus_tard}
+\end{center}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Idée générale et quelques méthodes cryptographiques}
+%% ------------------------------------ %%
+
+\begin{description}
+\item [Notion / définition de cryptographie / cryptage / code :]
+
+\item [Chiffrement / déchiffrement : ]
+
+\item [Aspects mathématiques :] quel type de mathématiques est utilisé ? (arithmétique)
+
+\item [Présentation de quelques méthodes simples : ] code de César, Vigenère, etc.
+
+\end{description}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Cryptographie à clé symétrique, ou à clé privée}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Mini-phrase spoiler : c'est quoi le principe de clé symétrique ? (un gamin de 10 ans doit pouvoir comprendre ici).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Principe}
+%% ------------------------------------ %%
+
+\begin{description}
+\item [Notion de clé privée : ]
+
+\item [Principe de la communication à clé privée : ] à expliquer de manière simple (quasiment toujours formulée classiquement avec Alice et Bob qui veulent communiquer et s'échanger de l'info, et éventuellement une espionne Eve). On peut faire référence à la figure.
+
+\end{description}
+
+
+\begin{figure}[!h]
+\begin{center}
+%   \includegraphics[height=2.5cm]{}
+  \caption{Principe de chiffrement à clé privée.}
+  \label{etiquette_de_la_figure_pour_y_faire_reference_plus_tard}
+\end{center}
+\end{figure}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Quelques exemples}
+%% ------------------------------------ %%
+
+Vigenère, Enigma, etc
+
+\begin{center}
+\begin{algorithm}
+\caption{Un algo simple type code de César ?}
+\label{etiquette_de_l_algo_pour_y_faire_reference_plus_tard}
+\end{algorithm}
+\end{center}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Cryptographie à clé asymétrique, ou à clé publique}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Mini-phrase spoiler : c'est quoi le principe de clé publique ? (un gamin de 10 ans doit pouvoir comprendre ici).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Principe}
+%% ------------------------------------ %%
+
+\begin{description}
+\item [Notion de clé publique : ]
+
+\item [Principe de la communication : ]
+
+\item [Lien avec la crypto à clé privée :] RSA peut par exemple servir à s'échanger une clé privée
+
+\end{description}
+
+\begin{figure}[!h]
+\begin{center}
+%   \includegraphics[height=2.5cm]{}
+  \caption{Principe de chiffrement à clé publique.}
+  \label{etiquette_de_la_figure_pour_y_faire_reference_plus_tard}
+\end{center}
+\end{figure}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Quelques exemples}
+%% ------------------------------------ %%
+
+RSA (avec un {\em c.f. section suivante}), DSA (autres ?)
+
+Utilisation et importance aujourd'hui.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{La méthode RSA}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Contexte}
+%% ------------------------------------ %%
+
+
+\begin{description}
+\item [Motivation :]
+
+\item [Origine : ] Rivest, Shamir et Adleman
+
+
+\item [Utilisation : ] énorme aujourd'hui
+
+
+\end{description}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Principe général}
+%% ------------------------------------ %%
+
+
+Méthode / algo {\bf (très général sans les détails)} RSA.
+
+\begin{center}
+\begin{algorithm}
+\caption{Algorithme RSA.}
+\label{etiquette_de_l_algo_pour_y_faire_reference_plus_tard}
+\end{algorithm}
+\end{center}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{thebibliography}{00}
+\addcontentsline{toc}{section}{Références}  %% les references c'est important, on les rajoute a la table des matieres
+%% ------------------------------------ %%
+
+\bibitem{pixees}
+  {\em Site Pixees}, D. Roche.
+  \url{https://pixees.fr/informatiquelycee/n_site/nsi_term_archi_secu.html}
+
+% \bibitem{monlyceenumerique} %% RIEN SUR LES COMMUNICATIONS ET HTTPS POUR LE MOMENT
+%   {\em Site Mon Lycée Numérique}, T. Lourdet, J. Monteillet, J-C. Gérard \& P. Thérèse.
+%   \url{}
+
+% \bibitem{lecluse} %% ICI NON PLUS RIEN SUR LES COMMUNICATIONS ET HTTPS POUR LE MOMENT
+%   {\em Site de NSI du lycée Salvador Allende (Caen)}, O. Lecluse.
+%   \url{}
+
+% \bibitem{mathsduyeti}  %% SUR CE SITE DE NSI IL N Y A RIEN NON PLUS SUR LES COMMUNICATIONS ET HTTPS POUR LE MOMENT
+%  {\em Site Les Maths du Yeti}, \og Mike le Yeti\fg (lycée Charles Péguy).
+%  \url{}
+
+\bibitem{lewebpedagogique}
+  {\em Site Le Web Pédagogique}.
+  \url{https://lewebpedagogique.com/dlaporte/category/nsi-1ere/}
+
+\bibitem{wikipedia}
+  {\em Wikipédia}, article \og Cryptography\fg.
+  \url{https://en.wikipedia.org/wiki/Cryptography}
+
+\bibitem{wikipedia}
+  {\em Wikipédia}, article \og Symmetric-key algorithm\fg.
+  \url{https://en.wikipedia.org/wiki/Symmetric-key_algorithm}
+  
+\bibitem{wikipedia}
+  {\em Wikipédia}, article \og Public-key cryptography\fg.
+  \url{https://en.wikipedia.org/wiki/Public-key_cryptography}
+  
+\bibitem{comprendressl}
+  {\em Chaîne youtube Comprendre le {\tt SSL/TLS}}, Y. Bidon.
+  \url{https://www.youtube.com/playlist?list=PLYsJ-3MUn_eeYwSgJ3Z_hfrIzGqYOGAaj}
+
+\end{thebibliography}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

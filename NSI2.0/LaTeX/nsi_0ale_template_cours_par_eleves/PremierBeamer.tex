@@ -1,0 +1,385 @@
+% La classe standard pour faire des slides en \LaTeX est la classe « beamer » :
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[12pt]{beamer}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Comme pour un fichier tex normal, on déclare les packages dans le préambule (i.e. ici, avant le « begin{document} ») :
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage{url}
+
+\usepackage{times}
+\usepackage{tikz}
+
+\usepackage{verbatim}
+\usetikzlibrary{arrows,shapes}
+
+% On définit le style des transparents par la commande \usetheme :
+\usetheme{Darmstadt}
+% Il existe déjà de nombreaux autres styles en beamer : Juan-Les-Pins, Berlin,...
+% On peut également se passer de style.
+
+%%
+\title[Faire une présentation, en LaTex]{Faire une présentation, en \LaTeX}
+\author[M. Senot]{Maxime Senot\footnote{À partir du document de Lucie Martinet \& Damien Stehlé}}
+\institute{Lycée EIB \'Etoile -- Paris\\
+% 1\textsuperscript{ère} --- Projet de programmation}
+T\textsuperscript{ale} --- Projet de programmation%
+}
+
+% \date[17/11/2020]{17 novembre 2020}
+
+
+% Cette commande permet d'afficher le plan a chaque changement de section
+%%%%%
+%\AtBeginSection[]
+%{
+%  \begin{frame}<beamer>
+ %   \frametitle{Plan}
+ %   \tableofcontents[currentsection]
+ % \end{frame}
+%}
+%%%%%%
+% On peut personnaliser les en-têtes et pieds de slides :
+\defbeamertemplate*{footline}{infolines theme}
+{
+ \hbox{%
+  \begin{beamercolorbox}[wd=.22\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+    \insertshortauthor%
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.57\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+    \insertshorttitle%
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.13\paperwidth,ht=2.25ex,dp=1ex,center]{date in head/foot}%
+    \insertshortdate{}%
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.08\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+    \insertframenumber/\inserttotalframenumber%
+  \end{beamercolorbox}}%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+%%%%
+
+\begin{frame}{Introduction}
+  \begin{exampleblock}{Objectifs de cette présentation}
+  \begin{itemize}
+    \item Des conseils pour faire un bon exposé scientifique
+    \item Comment utiliser \LaTeX pour faire un exposé
+  \end{itemize}
+  \end{exampleblock}
+\end{frame}
+
+%%%%
+
+\begin{frame}
+  \frametitle{Plan}
+  \tableofcontents
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Quel contenu?}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Que raconter?}
+  Déterminer les informations que l'on veut faire passer
+  \begin{itemize}
+    \item Pas trop de détails
+    \item Dégager les grandes idées, les points importants 
+    \item Les présenter logiquement
+  \end{itemize}
+
+  \bigskip
+
+  \uncover<2->{
+    Le discours doit être \textcolor{red}{structuré}
+    \begin{itemize}
+      \item Une introduction
+      \item Des parties
+      \item Une conclusion 
+    \end{itemize}
+  }
+\end{frame}
+
+%%%%
+
+\begin{frame}{Le niveau technique}
+  \vspace*{-.2cm}
+  Connaître son public, et s'y adapter:
+  \begin{itemize}
+    \item Quelle est son niveau de connaissance?
+    \item Quel est son niveau technique?
+    \item Ne pas sur-estimer son public!
+  \end{itemize}
+
+  \medskip
+  \uncover<2->{
+    \begin{alertblock}{Dans le cas d'une présentation d'un rapport}
+      Les examinateurs ne connaissent pas les détails de votre rapport sur le bout des doigts!
+      Ni même leur sujet, parfois!
+    \end{alertblock}
+  }
+  \uncover<3->{
+    \medskip
+    Public hétérogène: tous les membres de l'auditoire doivent pouvoir comprendre au moins un peu.
+  }
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Comment passer un message}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Un exposé n'est pas un rapport}
+  \begin{alertblock}{}
+    Passer son rapport au vidéoprojecteur n'est pas une option\ldots
+  \end{alertblock}
+
+  \medskip
+
+  Des transparents \textcolor{red}{clairs}:
+  \begin{enumerate}
+    \item<2-> Une grosse taille de caractères, et une police neutre
+    \item<3-> Un minimum d'abréviations
+    \item<4-> \'Eviter les cassures de lignes inélégantes
+    \item<5-> Ne pas souligner
+    \item<6-> Limiter les équations (en nombre et en complexité) \\  et les algorithmes
+  \end{enumerate}
+\end{frame}
+
+%%%%
+
+\begin{frame}{Exploiter l'aspect visuel}
+  \begin{itemize}
+    \item Des images et des dessins 
+    \item Des tableaux, graphiques, histogrammes (mais simples!)
+    \item Utiliser les couleurs mais:
+      \begin{itemize}
+	\item pas de vert (ou jaune)
+	\item pas des couleurs claires 
+	\item pas d'effet arc-en-ciel
+      \end{itemize}
+  \end{itemize}
+
+  \uncover<3->{
+    \begin{alertblock}{Et les animations?}
+      Éviter d'en faire trop et utiliser si cela permet d'expliquer particulièrement bien (généralement dans les dessins).
+    \end{alertblock}
+  }
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Questions pratiques}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Combien?}
+  \begin{alertblock}{Le principe général}
+    Ne pas gaver son public... surtout s'il enchaîne les exposés
+  \end{alertblock}
+
+  \medskip
+
+  \uncover<2->{
+    Quelques ordres de grandeur:
+    \begin{itemize}
+      \item $\gg$ 45 sec par transparent, voire plutôt $\gg$ 60 sec \\ (à adapter aux circonstances)
+      \item Une idée principale par transparent 
+      \item Si plus de 10-15 transparents, mettre un transparent de plan entre les parties, et respirer un coup
+      \item Numéroter ses transparents
+    \end{itemize}
+  }
+\end{frame}
+
+%%%%
+
+\begin{frame}{Comment gérer le déroulement à l'oral}
+  \begin{block}{D\'emarrer\ldots}
+    Avec au moins une phrase introductive, par exemple sur le contexte de l'exposé
+  \end{block}
+
+  \uncover<2->{
+    \begin{block}{Terminer...}
+      En faisant un résumé et en élargissant le spectre.\\
+      L'auditoire doit comprendre que vous avez fini de parler.
+    \end{block}
+  }
+
+  \uncover<3->{
+    \begin{block}{Enchaîner...}
+      Annoncer un plan au début {\footnotesize (avec un transparent, ou à l'oral si l'exposé est très court)}, 
+      et le  rappeler {\footnotesize (au moins  à l'oral)} quand \\ 
+      on change de partie.
+    \end{block}
+  }
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Autour des transparents}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{La tenue... des remarques de bon sens...}
+  \begin{itemize}
+    \item Se tenir debout
+    \item<2-> Avoir une apparence neutre: \\
+    c'est le contenu de l'exposé qui doit attirer l'attention
+    \item<3-> \^Etre réveillé, mais pas sur-excité
+    \item<4-> Ne pas parler trop vite, et ne pas avaler les syllabes
+    \item<5-> Regarder son auditoire: c'est \`a lui que vous parlez!
+  \end{itemize}
+\end{frame}
+
+%%%%
+
+\begin{frame}{Se préparer}
+  Répéter, mais pas trop: 
+  \begin{itemize}
+    \item connaître le contenu, mais sans le connaître par cœur
+    \item se chronométrer
+  \end{itemize}
+
+  \medskip
+
+  \begin{alertblock}{Et surtout}
+    Toujours avoir au moins \textcolor{red}{\bf deux} solutions techniques.
+    \begin{itemize}
+      \item portable perso 
+      \item clé USB
+      \item fichier {\tt .pdf} envoyé auparavant aux organisateurs
+    \end{itemize}
+  \end{alertblock}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Beamer}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}{Beamer}
+  Beamer, qu'est-ce?
+  \begin{itemize}
+    \item Un package \LaTeX~pour faire de beaux transparents.
+    \item L'option par défaut pour un exposé scientifique, \\ au moins en informatique
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Exemple de code Beamer}
+\begin{lstlisting}
+ 
+\end{lstlisting}
+
+\footnotesize
+\tt{
+$\backslash$begin\{frame\}\{Mon titre\}
+
+du texte
+  
+$\backslash$uncover<2-> \{
+
+$\backslash$begin\{block\}\{Définition\}
+
+Un code est dit $\backslash$textbf\{bien écrit\} s'il est correct (syntaxiquement et sémantiquement), bien structuré, bien commenté et avec des algorithmes simples à comprendre.$\backslash\backslash$
+
+$\backslash$uncover<3->\{Le code est dit $\backslash$textbf\{cool\} s'il est bien écrit et contient des commentaires marrants et des easter eggs.\}
+
+$\backslash$end\{block\}
+
+\}
+
+encore du texte
+
+$\backslash$end\{frame\}
+}
+\end{frame}
+
+\begin{frame}{Mon titre}
+
+  du texte
+
+\uncover<2->{
+\begin{block}{Définition}
+Un code est dit \textbf{bien écrit} s'il est correct (syntaxiquement et sémantiquement), bien structuré, bien commenté et avec des algorithmes simples à comprendre.\\ \uncover<3->{Le code est dit \textbf{cool} s'il est bien écrit et contient des commentaires marrants et des easter eggs.}
+\end{block}
+}
+
+encore du texte
+\end{frame}
+
+\begin{frame}{Dessins et animations}
+\begin{itemize}
+\item {\tt $\backslash$includegraphics} est l'option basique mais les dessins sont statiques
+\item l'utilisation des langages comme {\tt PGF/TikZ} est une des alternatives
+\end{itemize}
+
+\bigskip
+
+\uncover<2->{
+les avantages des dessins programmés en \LaTeX :
+
+\begin{itemize}
+\item des vraies animations avec {\tt $\backslash$uncover, $\backslash$only}
+\item un seul fichier source
+\item pas besoin de faire la distinction entre les différents formats de dessin
+ pour choisir le mode de compilation : {\tt latex} ou {\tt pdflatex}
+\end{itemize}
+}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Exemple - The \TeX\ work flow}
+
+
+\tikzstyle{format} = [draw, thin, fill=blue!20]
+\tikzstyle{medium} = [ellipse, draw, thin, fill=green!20, minimum height=2.5em]
+
+\begin{figure}
+\begin{tikzpicture}[node distance=3cm, auto,>=latex', thick]
+    % We need to set at bounding box first. Otherwise the diagram
+    % will change position for each frame.
+    \path[use as bounding box] (-1,0) rectangle (10,-2);
+    \path[->]<1-> node[format] (tex) {.tex file};
+    \path[->]<2-> node[format, right of=tex] (dvi) {.dvi file}
+                  (tex) edge node {\TeX} (dvi);
+    \path[->]<3-> node[format, right of=dvi] (ps) {.ps file}
+                  node[medium, below of=dvi] (screen) {screen}
+                  (dvi) edge node {dvips} (ps)
+                        edge node[swap] {xdvi} (screen);
+    \path[->]<4-> node[format, right of=ps] (pdf) {.pdf file}
+                  node[medium, below of=ps] (print) {printer}
+                  (ps) edge node {ps2pdf} (pdf)
+                       edge node[swap] {gs} (screen)
+                       edge (print);
+    \path[->]<5-> (pdf) edge (screen)
+                        edge (print);
+    \path[->, draw]<6-> (tex) -- +(0,1) -| node[near start] {pdf\TeX} (pdf);
+\end{tikzpicture}
+\end{figure}
+\end{frame}
+
+
+\begin{frame}{Beamer}
+
+  Ressources:
+    \begin{itemize}
+      \item Petite introduction:\\ \url{http://www.math-linux.com/spip.php?article77}
+      \item Une liste de  thèmes:\\ \url{http://www.hartwork.org/beamer-theme-matrix/}
+      \item Guide d'utilisateur:\\ \url{http://tug.ctan.org/macros/latex/contrib/beamer/doc/beameruserguide.pdf}
+    \end{itemize}
+
+\end{frame}
+
+%%%%
+
+% \begin{frame}{Où trouver cette présentation}
+%   \url{http://perso.ens-lyon.fr/maxime.senot/Projet13/PremierBeamer.tar.gz}
+% \end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

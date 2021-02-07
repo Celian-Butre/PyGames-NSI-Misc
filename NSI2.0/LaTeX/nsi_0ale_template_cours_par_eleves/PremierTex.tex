@@ -1,0 +1,458 @@
+% Tout ce qui est mis derrière un « % » n'est pas vu par LaTeX.
+% Ce sont des commentaires. Ils permettent aussi de structurer le code LaTeX pour le rendre plus clair.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\documentclass[a4paper,11pt]{article}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% On commence toujours par préciser la classe du document, ici « article », et des options entre crochets.
+%
+% Plein de classes possibles : article, book, amsart, amsbook, slides, etc
+% Options possibles : 10pt, 11pt, 12pt (taille de la fonte)
+%                     oneside, twoside (recto simple, recto-verso)
+%                     draft, final (stade de développement)
+
+% Ensuite, on inclut des librairies. Ca donne accès à plein de trucs supers !
+% Il en existe un nombre incroyable, mais il ne faut pas en abuser.
+% Trop en mettre : 
+%    -> rend le code moins lisible, 
+%    -> crée des bugs à la compilation (incompatibilités), 
+%    -> et peut énerver vos co-auteurs (librairies non standards, versions différentes, etc).
+
+% Ces trois-là sont indispensables :
+\usepackage[utf8]{inputenc}    % Pour que LaTeX comprenne les accents.
+\usepackage[T1]{fontenc}       % Une autre police de caractères
+\usepackage[french]{babel}     % Traitement du texte adapté aux règles typographiques
+                               % de la langue donnée en option (e.g., pour l'espacement
+                               % après les ponctuations
+
+% Il existe beaucoup de police de caractères à disposition :                               
+\usepackage{times}             % Police de caractères
+
+% D'autres peuvent être ajoutées suivant les besoins :
+\usepackage{graphicx}                  % pour inclure des figures 
+\usepackage{amsmath, amsthm, amssymb}  % Pour faire de jolies mathématiques, 
+                                       % avec plein de symboles supplémentaires.
+\usepackage{url}                       % pour inclure des urls
+\usepackage{hyperref}                  % pour les liens (internes et externes au document)
+\usepackage[french,ruled,vlined]{algorithm2e}% pour présenter de jolis algos
+
+% \usepackage[left=3cm,right=3cm,top=3cm,bottom=3cm]{geometry}
+                                       % pour bidouiller les marges
+
+% En fait, il existe des librairies pour tout et n'importe quoi en LaTeX : 
+% \usepackage{simpsons}                % essayez les commandes \Bart, \Homer,... avec ce package
+
+% D'autres commandes dans l'entête : LaTeX est un langage de programmation !
+% On peut faire plein de choses...
+\sloppy                                % Ne pas faire déborder les lignes dans la marge
+\newcommand{\eps}{\varepsilon}         % Définition d'une nouvelle commande personnalisée (définie dans tout le document)
+\newcommand{\ps}[2]{\left<#1,#2\right>}% Définition d'une autre nouvelle commande
+% En général, on définit une commande perso, ou une macro, par :
+% \newcommand{\nomCommande}{définition commande}
+% Par exemple :
+% \newcommand{\ada}{\texttt{Ada}\xspace}
+% La commande \ada dans le fichier aura pour conséquence, après compilation, d'insérer le texte Ada écrit en écriture tt (police type machine à écrire) dans le pdf final (\xspace rajoute un espace derrière)
+
+% Un petit nombre de champs à compléter avant de commencer le document proprement dit :
+\title{Débuter en \LaTeX\footnote{d'après un document de Lucie Martinet et Damien Stehl\'e.}} % \footnote permet de rajouter une note en bas de page, numerotée automatiquement
+\author{Maxime \textsc{Senot}}
+% \date{} 
+% On peut mettre, la date qu'on veut.
+% « \today » ou aucun argument permet d'avoir la date d'aujourd'hui (jour de compilation du document).
+
+% Et voilà, on peut commencer le document : 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\maketitle % pour avoir le titre, l'auteur, la date : tout se fait tout seul
+
+\tableofcontents % pour avoir la table des matières
+                 % peut être commenté au besoin.
+
+% Idem: le résumé (ou abstract) peut aussi être commenté au besoin.
+\begin{abstract}
+\LaTeX{} est un langage de programmation pour faire de la mise en page de texte, 
+que ce soit un article sur une ou deux colonnes, un livre, des transparents (rendez-vous en avril pour la soutenance !)\ldots 
+% \ldots donne les pointillés, avec l'espacement adéquat
+
+% Un retour à la ligne dans le code source \LaTeX{} n'a aucune conséquence dans le fichier généré
+% En revanche, cela permet de mieux structurer le contenu dans le fichier source.tex (en évitant par exemple les phrases qui dépassent de l'écran)
+% Pour obtenir un retour à la ligne dans le document final, on peut soit utiliser \\, soit faire un saut de ligne (et non un simple retour à la ligne) dans le fichier source
+
+\noindent \LaTeX{} n'est pas un éditeur WYSIWYG (contrairement à Word : \emph{What You See Is What You Get}): 
+comme pour tout langage de programmation, les fichiers sources doivent être compilés.
+% \noindent permet de ne pas effectuer de retrait en début de paragraphe.
+
+Dans \LaTeX{}, tout est automatisé (entête, numérotation des parties, de la biblio, des notes de bas de  page, etc). 
+Le langage est très riche (formules mathématiques, bibliographie, références, table des matières, figures, pseudo-codes, etc). 
+La base d'utilisateurs est gigantesque (documentations, faq, librairies). 
+% Et de toute fa\c{c}on, vous n'avez pas le choix: c'est le standard commun aux scientifiques!
+\end{abstract}
+
+% Le document peut être découpé en parties (assez rare, mais peut arriver pour un gros rapport ou une thèse), sections, sous-sections, sous-sous-sections, etc.
+% \part{Titre}                % Commencer une partie...
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{L'environnement de travail}   
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Commencer une section
+Un document \LaTeX{} a une extension \texttt{.tex}. 
+% La commande \texttt permet de changer le style de police, ici en typewriter typeface.
+% Autres possibilités :
+%  \emph{texte}    (en italique)
+%  \textbf{texte}  (en gras)
+%  \textsc{texte}  (en petite capitale)
+
+% Les commandes commencent toutes par un « \ »
+% On a désormais 4 caractères réservés : %, \, { et }
+
+C'est le fichier \texttt{.tex} qui va être compilé. 
+On peut écrire du \LaTeX{} avec n'importe quel éditeur de texte (gedit, emacs,...). 
+Pour compiler, il faut soit utiliser un terminal soit un éditeur qui  permet de compiler avec des raccourcis.
+
+%% ------------------------------------ %%
+\subsection{Compiler avec un terminal}
+%% ------------------------------------ %%
+
+Il faut d'abord se placer dans le répertoire où se trouve votre \texttt{.tex}  (comme d'habitude)  et lancer l'une des commandes suivantes:
+
+\begin{verbatim}
+latex PremierTex.tex
+pdflatex PremierTex.tex
+\end{verbatim}
+
+% verbatim permet d'insérer du code facilement.
+% Cet environnement permet d'afficher exactement ce que l'on voit dans l'éditeur de texte
+% Tout ce qui est entre \begin{verbatim} et \end{verbatim} sera directement affiché (sans être compilé).
+
+La première commande permet d'obtenir un \texttt{.dvi}. 
+On pourra ensuite l'exporter en \texttt{.pdf}  avec la  commande \texttt{dvipdf PremierTex.dvi}), 
+ou en \texttt{.ps} avec la commande \texttt{dvips -o PremierTex.ps PremierTex.dvi}.
+
+La seconde commande est plus pratique, car elle permet d'avoir un \texttt{.pdf} directement.
+Mais il peut y avoir des incompatibilités en particulier dans le cas d'une insertion de figures dans d'autres formats que \texttt{.pdf}.
+
+Pour que la table des matières (qui s'obtient avec la commande \texttt{$\backslash$tableofcontents}, 
+% Ben oui, le caractère \ étant réservé, il faut ruser pour pouvoir écire \
+placée dans le corps du document \LaTeX{}) soit à jour, il faut compiler deux fois de suite. 
+C'est aussi le cas pour les références, ou pour la bibliographie.
+
+%% ------------------------------------ %%
+\subsection{Compiler avec un éditeur plus ou moins spécifique}
+%% ------------------------------------ %%
+
+Ce document a été initialement compilé avec TeXworks (disponible sous windows). 
+Dans la plupart des éditeurs spécifiques à \LaTeX{}, il existe un bouton permettant 
+d'effectuer la compilation du fichier \texttt{.tex} directement en fichier \texttt{.pdf},
+De nombreux autres éditeurs de textes spécifiques à \LaTeX{} existent : Kile, TexMaker, TeXnicCenter (Windows)\ldots
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Commencer un document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Comme pour {\tt Python}, {\tt C}, {\tt Java}, ou tout autre langage de programmation, un programme \LaTeX{} commence par des entêtes et une liste de packages à importer.
+
+L'une des plus courtes formes se présente de la manière suivante:
+
+\begin{verbatim}
+\documentclass[10pt]{TypeDeDocument}
+\usepackage[utf8]{inputenc}
+\usepackage[frenchb]{babel}
+\usepackage[T1]{fontenc}
+
+\date{}
+
+\begin{document}
+\section{Titre de la première section}
+\section{Titre de la deuxième section}
+\end{document}
+\end{verbatim}
+
+
+Avant \texttt{$\backslash$begin\{document\}}, 
+% On ruse maintenant pour obtenir les caractères réservés { et }.
+nous pouvons aussi ajouter nos propres commandes en les déclarant préalablement.
+
+Ce qui arrive après la commande \texttt{$\backslash$end\{document\}} n'est pas pris  en compte lors de la compilation.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Mise en forme du document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%% ------------------------------------ %%
+\subsection{Mise en forme générale du document}
+%% ------------------------------------ %%
+
+Pour faire des sections numérotées avec un titre, on utilise la commande suivante:
+\begin{verbatim}
+\section{Titre}
+\end{verbatim}
+
+Pour faire des sous-sections:
+\begin{verbatim}
+\subsection{Sous-Titre}
+\end{verbatim}
+
+Pour faire des sous-sous-sections:
+\begin{verbatim}
+\subsubsection{Sous-Sous-Titre}
+\end{verbatim}
+
+Et ça s'arrête là. Pour supprimer la numérotation des sections, 
+il faut ajouter une * comme suit : 
+\begin{verbatim}
+\section*{Titre}
+\subsection*{Sous-Titre}
+\subsubsection*{Sous-Sous-Titre}
+\end{verbatim}
+
+L'indentation se fait automatiquement à chaque nouveau paragraphe. 
+Un nouveau paragraphe est créé quand il y a un saut de ligne dans le code \LaTeX{}. 
+On peut également utiliser les commandes suivantes :
+\begin{verbatim}
+\\      %pour passer à la ligne suivante
+%ou
+\par    %pour commencer un nouveau paragraphe
+\end{verbatim}
+
+%% ------------------------------------ %%
+\subsection{Les listes}
+%% ------------------------------------ %%
+
+Il est possible de faire des listes, des énumérations, et même de changer les numéros et la forme des  « tirets ». Par exemple~:
+
+Ma liste de courses:
+\begin{itemize}
+\item Jus de fruits
+\item[$\Rightarrow$] Viande
+\item [$\bullet$] Une nouvelle classe de L1
+\end{itemize}
+
+\bigskip
+% Pour créer des espaces. Il existe aussi \medskip et \smallskip
+
+Ou par ordre de priorité:
+\begin{enumerate}
+\item Une nouvelle classe de L1
+\item Jus de fruits
+\item Viande
+\end{enumerate}
+
+
+\bigskip
+% Les commandes \smallskip, \medskip et \bigskip permettent d'insérer des sauts de lignes plus ou moins grands 
+
+\LaTeX{} permet également de faire des tableaux :
+
+\begin{tabular}{|lc|l|}
+% l centre le texte à gauche, r à droite, et c au centre
+% Les barres verticales créent des séparations verticales dans le tableau
+\hline
+case 1 & case 4 & case 7\\
+\hline
+case 2 & c & case 8 \\
+case 3 & case 6 & case 9\\
+\hline
+\end{tabular}
+
+\smallskip
+On peut aussi centrer du texte, ou n'importe quoi. Par exemple:
+\begin{center}
+\begin{tabular}{|lr|l|}
+% l centre le texte à gauche, r à droite, et c au centre
+% Les barres verticales créent des séparations verticales dans le tableau
+\hline
+case 1 & case 4 & case 7\\
+\hline
+case 2 & case 5 & case 8\\
+case 3 & case 6 & case 9\\
+\hline
+\end{tabular}
+\end{center}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Inclure des images}
+\label{se:images}
+% Créer un label permet ensuite de faire référence à cette section
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Pour faire cela, vous devez inclure un package qui le permet :
+\begin{verbatim}
+\usepackage{graphicx}
+\end{verbatim}
+
+A l'endroit où vous voulez inclure votre image, vous devez utiliser la commande suivante :
+\begin{verbatim}
+\includegraphics{nom_de_la_figure}
+\end{verbatim}
+
+Par exemple:
+\includegraphics[scale=.5]{by-nc-sa}
+
+Bon, c'est pas super\ldots Pour arranger un peu l'affichage, il faut jouer avec les options, et tester!
+
+En général, lorsqu'on ajoute une image au sein d'un texte, on aime bien pouvoir lui donner une légende et y faire référence. 
+Pour cela, il existe un environnement flottant, nommé \emph{figure}. Un environnement flottant signifie, comme son nom l'indique, qu'il peut être déplacé. 
+En particulier, \LaTeX{} placera cet environnement à l'endroit qu'il juge le plus adéquat, souvent, à l'endroit qui permet de minimiser la taille du document.
+\begin{verbatim}
+\begin{figure}[!h]
+  \includegraphics{nom_de_la_figure}
+  \caption{La légende que vous voulez.}
+\end{figure}
+\end{verbatim}
+
+L'option \texttt{[!h]} permet de forcer \LaTeX{} à placer notre figure à cet endroit du document et pas ailleurs. 
+Malgré cette instruction, \LaTeX{} n'obéit pas toujours, mais c'est rare.
+
+L'instruction \texttt{$\backslash$caption\{La légende que vous voulez\}} permet d'ajouter  une légende à la figure.
+
+Vous pouvez aussi ranger vos figures dans un répertoire séparé, par exemple un sous-répertoire. 
+Cependant, vous devrez veiller à écrire le bon chemin.
+
+Voici ce que l'on obtient avec la figure précédente, avec quelques options:
+\begin{figure}[!h]
+  \begin{center}
+  \includegraphics[height=2.5cm]{by-nc-sa}
+  % Les options de largeur (width), rotation (angle), échelle (scale) sont également disponibles 
+  \caption{Logo de la licence libre CC BY-NC-SA.}
+  % Je crée un label pour la figure (attention à bien déclarer le label APRES la légende).
+  \label{fig1}
+  \end{center}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{\'Ecrire un algorithme}
+\label{se:algo}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Il existe différents packages pour présenter des algorithmes en \LaTeX{} : \texttt{algorithm2e}, \texttt{algorithmics}\ldots
+L'algorithme \og Faire un rapport \LaTeX{} \fg est un exemple d'algorithme obtenu grâce au package \texttt{algorithm2e}.
+% \og et \fg sont les guillemets respectivement ouvrant et fermant.
+\begin{algorithm}
+\SetKwInOut{Input}{input}
+\SetKwInOut{Output}{output}
+\Input{un rapport de projet à écrire.}
+\Output{le rapport rédigé en \LaTeX{}.}
+\BlankLine
+\tcp{voir la doc d'algorithme2e pour définir des mots-clés et instructions en français}
+$n \leftarrow$ nombre de personnes dans l'équipe du projet \\
+Rédiger\_rapport(param1 = $n$ élèves ; param2 = consignes) \\
+\SetKw{Ou}{ou}
+Compiler\_rapport \\
+\While{(errors) \Ou (warnings)}{
+  Lire\_messages \\
+  Corriger\_erreurs \\
+  Compiler\_rapport \\
+}
+\eIf{Accord(param\_opt = toute l'équipe) {\bf or} date=deadline}
+  {Rendre\_rapport}
+  {Effectuer\_retouches }
+\caption{Faire un rapport en \LaTeX{}.}
+\end{algorithm}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Labels, références, notes de bas de page}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Tout cela peut se faire automatiquement, sans avoir à chercher les numéros qui vont bien manuellement. 
+Les commandes importantes pour cela sont:
+\begin{verbatim}
+\label{}     % pour créer un label
+\ref{}       % pour lui faire référence
+\cite{}      % idem \ref, mais pour la biblio
+\footnote{}  % note de bas de page
+\end{verbatim}
+Comme j'ai créé des références dans mon fichier source, je peux maintenant parler de la Figure~\ref{fig1} de la Section~\ref{se:images}. 
+Je peux également faire référence à l'entrée~\cite{lamport94} de la bibliographie.
+\footnote{Ne pas abuser des notes de bas de page}
+\footnote{Qu'est-ce que je viens juste de dire?}
+% Le caractère ~ fournit un espace insécable
+% Le package hyperref fournit un raccourci direct entre la ref (ou le cite) et le label. 
+% En bidouillant les options de hyperref, on peut mettre ce lien en couleurs, en boites, le souligner... 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Les maths}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Pour faire des maths, on utilise un environnement spécial.
+On a le choix entre deux environnements possibles:
+\begin{verbatim}
+$mon expression mathématiques$
+\end{verbatim} 
+ou 
+\begin{verbatim}
+\[mon expression mathématiques\]
+\end{verbatim}
+La première version permet d'écrire des maths au sein d'une ligne de texte sans revenir à la ligne. 
+Un petit exemple valant mieux qu'un long discours, on peut écrire ceci: 
+$\displaystyle\sum_{i=0}^{max} i^2$, avec la commande 
+\texttt{$\$\backslash displaystyle\backslash$sum\_\{i=0\}\^{ }\{max\} i\^{ }2$\$$}.
+% La commande \displaystyle permet d'avoir une jolie mise en page. Mais elle augmente l'écart entre les lignes.
+
+La deuxième crée un environnement qui sera séparé du texte par un retour à la ligne et des sauts de lignes. 
+Par exemple, l'expression \texttt{$\backslash$[$\backslash$sum$\_\{i=0\}^{ }n 
+\backslash$prod$\_\{$j=i$\}^{ }\{$m$\} $k$\_\{\mathtt{ij}\}^{ }2 \backslash$]} donnera:
+
+\[ \sum_{i=0}^n \prod_{j=i}^{m} k_{ij}^2 \]
+
+On peut aussi créer des commandes \LaTeX{} pour les formules que l'on utilise souvent, et pour rendre le fichier source plus lisible. 
+Par exemple, avec les commandes créées au début du source \texttt{.tex} de ce \texttt{.pdf}: $\eps$ et~$\ps{\vec{b}_1}{\vec{b}_2}$.
+
+\newpage
+% La commande \newpage permet de forcer une nouvelle page
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Ressources}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Quelques liens très utiles:\\
+
+\url{www.tuteurs.ens.fr/logiciels/latex}\\
+
+\url{http://melusine.eu.org/syracuse/doc/faq-tex-french/faq-tex-french.html}\\
+
+\url{http://detexify.kirelabs.org/classify.html}\\
+
+\url{www.ctan.org/tex-archive/info/symbols/comprehensive/symbols-a4.pdf}
+
+% Avant de finir, une petite bibliographie :
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{thebibliography}{00}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Le nombre de caractère de l'argument en option spécifie le nombre maximal de caractères des entrées bibliographiques. 
+% Deux caractères => au plus 99 entrées
+
+\bibitem{lamport94}
+  Leslie Lamport,
+  \emph{\LaTeX\hspace{-.2cm}: A Document Preparation System}.
+% Eh oui, il y a même une commande \LaTeX
+  Addison Wesley, Massachusetts,
+  2nd Edition,
+  1994.
+
+\bibitem{ctan}
+  The Comprehensive TeX Archive Network.
+  \url{http://www.ctan.org/}
+
+% Et pour finir, la bible de LaTeX :
+\bibitem{knuth86}
+  Donald E. Knuth,
+  \emph{The \TeX{} book}.  
+  Addison Wesley,
+  1986.
+
+\end{thebibliography}
+% Il existe un autre moyen de gérer la bibliographie : en utilisant BibTeX.
+% BibTeX permet de générer automatiquement la partie thebibliography avec les bibitems, à partir d'un fichier .bib, dans lequel on réferencie les entrées.
+% (attention à l'ordre compilations : LaTeX, puis BibTeX, puis LaTeX à nouveau.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+

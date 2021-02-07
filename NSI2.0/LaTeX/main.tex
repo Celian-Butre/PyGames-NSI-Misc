@@ -1,0 +1,156 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{amsmath}
+
+\title{Devoir Maison NSI}
+\author{Célian \tt {BUTRÉ}}
+\date{Janvier 2021}
+
+\usepackage[french]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[french,ruled,vlined]{algorithm2e}
+
+\usepackage{minted}
+\makeatletter
+\AtBeginEnvironment{minted}{\dontdofcolorbox}
+\def\dontdofcolorbox{\renewcommand\fcolorbox[4][]{##4}}
+\makeatother
+
+\usepackage{lmodern}
+\usepackage{graphicx} 
+\usepackage{listings}
+\graphicspath{{Images/}}
+
+\usepackage[left=1.5cm,right=1.5cm,top=2cm,bottom=2cm,headsep=1cm]{geometry}
+\usepackage{fancyhdr}
+\usepackage{lastpage}
+\fancyhf{}
+
+\lhead{}\chead{}\rhead{}
+\lfoot{}\cfoot{\sc Devoir Maison NSI}\rfoot{\thepage}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{1pt}
+\pagestyle{fancy}
+
+\title{
+{\normalsize
+\vspace*{-1.5cm}
+\includegraphics[width=3cm]{eib_logo.jpg}
+% 
+\hfill
+T\textsuperscript{ale}\\
+Lycée EIB \'Etoile 2020--2021
+\hfill
+{\sc Numériques et Sciences Informatiques}
+\hrule%
+\vspace{5mm}%
+}
+{\sc Devoir Maison NSI}}
+
+
+
+\begin{document}
+\maketitle
+\thispagestyle{fancy}
+
+\section*{Exercice 3}
+
+
+
+
+\subsection*{Question 1: Déterminer la taille et hauteur de l'arbre binaire}
+
+La hauteur d'un n\oe{}ud correspond au maximum des hauteurs de ses deux fils, plus lui-même. La taille d'un n\oe{}ud correspond à la somme des tailles de ses deux fils plus lui-même.
+
+Les n\oe{}uds C, G, H, I n'ont pas de fils, ils ont donc une taille de 1. Le n\oe{}ud D a pour unique fils G, qui a une taille de 1, il a donc une taille de 2; le n\oe{}ud F a pour fils H et I, tous deux ayant une taille de 1, il a donc une taille de 3. Le n\oe{}ud B a pour fils C et D, l'un ayant une taille de 1, l'autre de 2, il a donc une taille de 4; le n\oe{}ud E a pour unique fils F, qui a une taille de 3, il a donc une taille de 4. Finalement, le n\oe{}ud A a pour fils B et E, tous deux ayant une taille de 4, il a donc une taille de 9. {\bf La taille de l'arbre est de 9.}
+
+Les n\oe{}uds C, G, H, I n'ont pas de fils, ils ont donc une hauteur de 1. Le n\oe{}ud D a pour unique fils G, qui a une hauteur de 1, il a donc une hauteur de 2; le n\oe{}ud F a pour fils H et I, tous deux ayant une hauteur de 1, il a donc une hauteur de 2. Le n\oe{}ud B a pour fils C et D, l'un ayant une hauteur de 1, l'autre de 2, il a donc une hauteur de 3; le n\oe{}ud E a pour unique fils F, qui a une hauteur de 2, il a donc une hauteur de 3. Finalement, le n\oe{}ud A a pour fils B et E, tous deux ayant une hauteur de 3, il a donc une hauteur de 4. {\bf La hauteur de l'arbre est de 4}
+
+
+\subsection*{Question 2: Étude d'un arbre numéroté en binaire}
+
+\subsubsection*{1. Numéros associés aux n\oe{}uds ({\em en particulier G})}
+
+\begin{tabular}{p{3cm}|p{1cm}|p{1cm}|p{1cm}|p{1cm}}
+{\bf Point} & D & G & H & I\\
+\hline
+
+{\bf Valeur Binaire} & 101 & 1010 & 1100 & 1101
+\end{tabular}
+
+
+\subsubsection*{2. N\oe{}ud numéroté 13 en binaire}
+
+On suppose que l'on représente 13 en binaire non signé
+
+$ 13 = 2^3 + 2^2 + 2^0 = 1101_{bin} $ 
+
+C'est donc le n\oe{}ud I dont le numéro en binaire vaut 13
+
+\subsubsection*{3. Bits pour représenter un arbre de hauteur h}
+
+Les n\oe{}uds les plus en bas seront numérotés sur h bits car chaque hauteur en plus rajoute 1 bit, et qu'un arbre de hauteur 1 est représenté sur 1 bit.
+
+\subsubsection*{4. Justification de la propriété de cet arbre}
+
+$ h \leq n $ signifie que la hauteur ne dépasse jamais la taille, or la hauteur correspond à la succession de fils la plus longue, cette suite comporte obligatoirement autant de n\oe{}uds que la longueur de la succession. h ne peut pas être plus grande que n d'où $ h \leq n $.
+\\
+
+On procède à une pseudo-récurrence pour prouver $ n \leq 2^h -1 $, en partant du fait qu'un arbre de hauteur h, et de taille maximale est un arbre complet de hauteur h, c'est à dire un arbre qui a récursivement deux fils par n\oe{}ud. Soit $ n_{maxh} $ la taille maximale d'un arbre de taille h, pour toute taille d'arbre n de hauteur h on sait que $n_{maxh} \geq n$. On procède donc par prouver que $ n_{maxh} = 2^h - 1 $ ce qui prouvera que $ n \leq 2^h -1 $.
+\\
+
+Initialisation: pour un arbre de hauteur 2, un arbre complet comporte 3 sommets, donc $ 3 = 2^2 - 1 $, donc $ n_{maxh} =  2^h -1 $ pour le cas de base de $ h = 2 $.
+\\
+
+Hérédité: un arbre complet de hauteur h+1 comporte un sommet, et 2 arbres complets de hauteur h. On part de l'hypothèse de récurrence $ n_{maxh} =  2^h -1 $, dans le but de prouver $ n_{maxh+1} =  2^{h+1} -1 $.
+
+
+\begin{equation*}
+\begin{aligned}
+    n_{maxh} & =  2^h -1 \\
+    2 * n_{maxh} & = 2*(2^h -1) \\
+    2 * n_{maxh} + 1 & = 2*(2^h - 1) + 1 \\
+    n_{maxh+1} & = 2^{h+1} -1 \\
+\end{aligned}
+\end{equation*}
+
+La propriété ($ n_{maxh} = 2^h - 1 $ et donc $ n \leq 2^h -1 $) est vraie au rang 2 (pour h = 2) et héréditaire à partir de celui-ci, d'après le principe de récurrence, la propriété est vraie pour tout $ h \geq 2 $.
+
+\begin{center}
+\begin{math}
+\boldsymbol{h \leq n \leq 2^h - 1}
+\end{math}
+\end{center}
+
+\subsection*{Question 3: Étude d'un arbre binaire complet}
+
+\subsubsection*{1. Tableau représentant un arbre binaire complet}
+
+\begin{tabular}{*{16}{|c}|}\hline
+15&A&B&C&D&E&F&G&H&I&J&K&L&M&N&O
+\\\hline
+\end{tabular}
+
+\subsubsection*{2. Calcul d'un indice dans le tableau}
+
+Le père du n\oe{}ud d'indice $ i $ a pour indice dans le tableau $ i//2 $, c'est à dire la partie entière de la moitié de l'indice de son fils.
+
+\subsection*{Question 4: Recherche dans un arbre binaire de recherche}
+
+On suppose qu'on possède au préalable une classe arbre avec les attributs racine, fils\textunderscore{}droit et fils\textunderscore{}gauche. Et que cette classe choisit de représenter ses n\oe{}uds sans racines comme ayant 2 fils None.
+
+\begin{minted}{python}
+def recherche(arbre, élément):
+    if arbre == None:
+        return(False)
+    if arbre.racine == élément:
+        return(True)
+    if arbre.racine > élément:
+        return(recherche(arbre.fils_gauche, élément))
+    return(recherche(arbre.fils_droit, élément))
+    
+\end{minted}
+
+
+\end{document}
